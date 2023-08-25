@@ -1,71 +1,46 @@
-import React from 'react'
+import React, {useState, useEffect} from "react";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 
 function HomePage() {
+  const [userData, setUserData] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [suggestedNames, setSuggestedNames] = useState([]);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((data) => setUserData(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+  useEffect(() => {
+    const filteredNames = userData
+      .filter((user) =>
+        user.name.toLowerCase().includes(inputValue.toLowerCase())
+      )
+      .map((user) => user.name);
+    setSuggestedNames(filteredNames);
+  }, [inputValue, userData]);
+
   return (
     <div>
-      HomePage
-      <h1>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero,
-        velit repudiandae hic, eaque reprehenderit incidunt, quisquam vel ab
-        accusamus excepturi delectus corrupti impedit deleniti nostrum quos
-        quaerat et explicabo?Lorem ipsum dolor sit amet consectetur adipisicing
-        elit. Nisi quidem veniam molestias iure nihil illum. Nam sit commodi
-        dolore consequatur doloribus, autem nulla, pariatur enim rerum at
-        consequuntur. Eius, excepturi Lorem ipsum dolor sit amet consectetur
-        adipisicing elit. Dolor, aspernatur. Sed, culpa odit! Ducimus aliquid
-        eos repellat perferendis ullam? Veniam laboriosam reprehenderit nulla
-        doloribus eligendi praesentium, fuga cupiditate pariatur eveniet.
-      </h1>
-      <h1>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero,
-        velit repudiandae hic, eaque reprehenderit incidunt, quisquam vel ab
-        accusamus excepturi delectus corrupti impedit deleniti nostrum quos
-        quaerat et explicabo?Lorem ipsum dolor sit amet consectetur adipisicing
-        elit. Nisi quidem veniam molestias iure nihil illum. Nam sit commodi
-        dolore consequatur doloribus, autem nulla, pariatur enim rerum at
-        consequuntur. Eius, excepturi Lorem ipsum dolor sit amet consectetur
-        adipisicing elit. Dolor, aspernatur. Sed, culpa odit! Ducimus aliquid
-        eos repellat perferendis ullam? Veniam laboriosam reprehenderit nulla
-        doloribus eligendi praesentium, fuga cupiditate pariatur eveniet.
-      </h1>
-      <h1>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero,
-        velit repudiandae hic, eaque reprehenderit incidunt, quisquam vel ab
-        accusamus excepturi delectus corrupti impedit deleniti nostrum quos
-        quaerat et explicabo?Lorem ipsum dolor sit amet consectetur adipisicing
-        elit. Nisi quidem veniam molestias iure nihil illum. Nam sit commodi
-        dolore consequatur doloribus, autem nulla, pariatur enim rerum at
-        consequuntur. Eius, excepturi Lorem ipsum dolor sit amet consectetur
-        adipisicing elit. Dolor, aspernatur. Sed, culpa odit! Ducimus aliquid
-        eos repellat perferendis ullam? Veniam laboriosam reprehenderit nulla
-        doloribus eligendi praesentium, fuga cupiditate pariatur eveniet.
-      </h1>
-      <h1>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero,
-        velit repudiandae hic, eaque reprehenderit incidunt, quisquam vel ab
-        accusamus excepturi delectus corrupti impedit deleniti nostrum quos
-        quaerat et explicabo?Lorem ipsum dolor sit amet consectetur adipisicing
-        elit. Nisi quidem veniam molestias iure nihil illum. Nam sit commodi
-        dolore consequatur doloribus, autem nulla, pariatur enim rerum at
-        consequuntur. Eius, excepturi Lorem ipsum dolor sit amet consectetur
-        adipisicing elit. Dolor, aspernatur. Sed, culpa odit! Ducimus aliquid
-        eos repellat perferendis ullam? Veniam laboriosam reprehenderit nulla
-        doloribus eligendi praesentium, fuga cupiditate pariatur eveniet.
-      </h1>
-      <h1>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero,
-        velit repudiandae hic, eaque reprehenderit incidunt, quisquam vel ab
-        accusamus excepturi delectus corrupti impedit deleniti nostrum quos
-        quaerat et explicabo?Lorem ipsum dolor sit amet consectetur adipisicing
-        elit. Nisi quidem veniam molestias iure nihil illum. Nam sit commodi
-        dolore consequatur doloribus, autem nulla, pariatur enim rerum at
-        consequuntur. Eius, excepturi Lorem ipsum dolor sit amet consectetur
-        adipisicing elit. Dolor, aspernatur. Sed, culpa odit! Ducimus aliquid
-        eos repellat perferendis ullam? Veniam laboriosam reprehenderit nulla
-        doloribus eligendi praesentium, fuga cupiditate pariatur eveniet.
-      </h1><h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero, velit repudiandae hic, eaque reprehenderit incidunt, quisquam vel ab accusamus excepturi delectus corrupti impedit deleniti nostrum quos quaerat et explicabo?Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quidem veniam molestias iure nihil illum. Nam sit commodi dolore consequatur doloribus, autem nulla, pariatur enim rerum at consequuntur. Eius, excepturi Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, aspernatur. Sed, culpa odit! Ducimus aliquid eos repellat perferendis ullam? Veniam laboriosam reprehenderit nulla doloribus eligendi praesentium, fuga cupiditate pariatur eveniet.</h1>
+      <h1>Users from API:</h1>
+      <Autocomplete
+        options={suggestedNames}
+        renderInput={(params) => (
+          <TextField {...params} label="Search for names" variant="outlined" />
+        )}
+      />
+      {/* <ul>
+        {userData.map((user) => (
+          <li key={user.id}>
+            <h3>{user.name}</h3>
+          </li>
+        ))}
+      </ul> */}
     </div>
   );
 }
 
-export default HomePage
+export default HomePage;
