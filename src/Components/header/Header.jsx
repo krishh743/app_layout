@@ -1,7 +1,6 @@
 import React from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {Stack} from "@mui/material";
-import {Directions} from "@mui/icons-material";
 
 function Header() {
   return (

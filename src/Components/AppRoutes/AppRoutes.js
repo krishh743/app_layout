@@ -8,7 +8,6 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<HomePage />}/>
       <Route path="/dashboard" element={<Dashboard />} />
-
     </Routes>
   );
 }
