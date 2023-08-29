@@ -109,7 +109,7 @@ function HomePage() {
   const [timeoutRef, setTimeoutRef] = useState(null);
 
   const apiData = () => {
-    fetch(`https://jsonplaceholder.typicode.com/users`)
+    fetch(`https://jsonplaceholder.typicode.com/users?name=${inputValue}`)
       .then((response) =>
         response.json().then((response) => {
           console.log(response, "sjchsdfjkds");
@@ -123,34 +123,14 @@ function HomePage() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       apiData();
-      // setTimeoutRef(timeout);
     }, 3000);
-    return () => clearTimeout(timeout);
+return () => clearTimeout(timeout);
   }, [inputValue]);
-
-  // useEffect(() => {
-  //   if (inputValue.toLowerCase().includes("fr")) {
-  //     const filteredNames = userData
-  //       .filter((user) =>
-  //         user.name
-  //           .toLowerCase()
-  //           .startsWith(inputValue.toLowerCase().replace("from ", "").trim())
-  //       )
-  //       .map((user) => user.name);
-  //     setSuggestedNames(filteredNames);
-  //   } else {
-  //     setSuggestedNames([]);
-  //   }
-  // }, [inputValue, userData]);
 
   const handleSuggestionClick = (user) => {
     setInputValue(user.name);
-    setSuggestedNames([]);
+setSuggestedNames([])
   };
-
-  // const clearSuggestions = () => {
-  //   setSuggestedNames([]);
-  // };
 
   return (
     <div>
